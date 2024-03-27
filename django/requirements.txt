@@ -1,2 +1,18 @@
 django==5.0.3
 django-cors-headers==4.3.1
+
+# Dev packages
+black>=24.3
+django-stubs==4.2
+flake8==7.0
+isort==5.13.2
+mypy==1.9
+pylint==3.1
+pylint-django==2.5.5
+pytest==8.1.1
+pytest-cov==5.0.0
+pytest-django==4.8.0
+time_machine==2.14.1
+python-dateutil
+tox == 4.14
+pip >= 24.0

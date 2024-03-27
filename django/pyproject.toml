@@ -9,7 +9,12 @@ build-backend = "setuptools.build_meta"
 line-length = "127"
 
 [tool.isort]
-profile = 'black'
+profile = "black"
+
+[tool.pylint.master]
+ignore = "migrations"
+load-plugins= "pylint_django"
+django-settings-module="digitalisLift.settings"
 
 [tool.pylint.messages_control]
 disable = "W0511" # Ignore "to do" warnings
@@ -21,6 +26,20 @@ max-line-length = "127"
 good-names = "i,j,k,m,ex,Run,_,s3,df,zf,cc"
 
 [tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE="digitalisLift.settings"
+
+[tool.django-stubs]
+django_settings_module = "digitalisLift.settings"
+
+[tool.mypy]
+plugins = [
+    "mypy_django_plugin.main"
+]
+
+[[tool.mypy.overrides]]
+module = [
+]
+ignore_missing_imports = true
 
 python_version = "3.10"
 follow_imports = "silent"
@@ -33,6 +52,7 @@ warn_unused_ignores = true
 # Getting these passing should be easy
 strict_equality = true
 strict_concatenate = true
+#strict_optional = true
 
 # Strongly recommend enabling this one as soon as you can
 check_untyped_defs = true
@@ -53,13 +73,3 @@ no_implicit_reexport = true
 
 # This one can be tricky to get passing if you use a lot of untyped libraries
 warn_return_any = true
-
-[tool.pydantic-mypy]
-init_forbid_extra = true
-init_typed = true
-warn_required_dynamic_aliases = true
-
-[[tool.mypy.overrides]]
-module = [
-]
-ignore_missing_imports = true
