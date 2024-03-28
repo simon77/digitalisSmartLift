@@ -157,3 +157,5 @@ cython_debug/
 .vscode/
 
 .aws-sam
+
+node_modules/
