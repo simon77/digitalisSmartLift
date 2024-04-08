@@ -3,6 +3,7 @@ import styled, {css} from 'styled-components'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowDown, faArrowsLeftRight, faArrowsUpDown, faArrowUp} from '@fortawesome/free-solid-svg-icons';
 import {Wrapper} from '..';
+import {LiftProps} from "./Lift";
 
 export type LiftScreenProps = {
     servicedFloors: number[],
@@ -47,9 +48,9 @@ const FloorNumber = styled.span<{ requested?: boolean; current?: boolean; }>`
             `};
 `;
 
-export const Screen = (props: LiftScreenProps) => {
+export const Screen = (props: LiftProps) => {
     const stateIcon =
-        props.doors === 'open' ? faArrowsLeftRight
+        props.doorsOpen ? faArrowsLeftRight
             : props.direction === 'up' ? faArrowUp
                 : props.direction === 'down' ? faArrowDown
                     : faArrowsUpDown;

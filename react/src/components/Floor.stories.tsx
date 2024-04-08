@@ -30,6 +30,65 @@ export const Primary: Story = {
         floor_level: 0,
         floor_name: "Ground",
         numberOfPanels: 1,
+        numberOfFloors: 1,
+        liftConfig: {
+            "lifts": {
+                "1": {
+                    "serviced_floors": [
+                        0,
+                        1,
+                        2,
+                        3
+                    ]
+                },
+                "2": {
+                    "serviced_floors": [
+                        0,
+                        3
+                    ]
+                },
+                "3": {
+                    "serviced_floors": [
+                        0,
+                        1,
+                        2
+                    ]
+                },
+                "4": {
+                    "serviced_floors": [
+                        0,
+                        1
+                    ]
+                }
+            }
+        },
+        liftStatus: {
+            "lifts": {
+                "1": {
+                    "floor": 1,
+                    "destinations": [
+                        0,
+                        1,
+                        2
+                    ]
+                },
+                "2": {
+                    "floor": 0,
+                    "destinations": []
+                },
+                "3": {
+                    "floor": 0,
+                    "destinations": [
+                        0,
+                        1
+                    ]
+                },
+                "4": {
+                    "floor": 0,
+                    "destinations": []
+                }
+            }
+        }
     },
 };
 

@@ -9,7 +9,7 @@ import {faArrowsDownToLine} from '@fortawesome/free-solid-svg-icons';
 export interface ILiftButtons {
     lift: number
     floor: number
-    clickHandler: (lift:number, floor:number) => Promise<void>;
+    clickHandler: (lift:number, floor:number) => void;
 }
 
 const LiftButtonWrapper = styled(Wrapper)`

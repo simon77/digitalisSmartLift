@@ -13,8 +13,11 @@
     </facet>
   </component>
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$/django" />
-    <orderEntry type="jdk" jdkName="Python 3.10 (django)" jdkType="Python SDK" />
+    <content url="file://$MODULE_DIR$/django">
+      <excludeFolder url="file://$MODULE_DIR$/django/venv" />
+    </content>
+    <content url="file://$MODULE_DIR$/react" />
+    <orderEntry type="jdk" jdkName="Python 3.10 (venv)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">

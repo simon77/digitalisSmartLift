@@ -40,10 +40,15 @@ def assign_lift(request: RequestData) -> models.Lift:
     :return: a Lift instance
     """
     serviced_floors = models.ServicedFloor.objects.select_related().filter(
-        floor=request.from_floor.id,
+        floor=request.to_floor.id,
     )
 
     lifts = [serviced_floor.lift for serviced_floor in serviced_floors]
+
+    # Is there a lift already at this floor
+    for lift in lifts:
+        if lift.current_floor.floor_level == request.from_floor.floor_level:
+            return lift
 
     return random.choice(lifts)
 
@@ -100,12 +105,13 @@ def request_elevator(request: HttpRequest) -> HttpResponse:
             return JsonResponse({"error": "Unknown floor"}, status=404)
         lift_to_assign = assign_lift(request=request_data)
 
-        lift_request = LiftRequest(
-            lift=lift_to_assign,
-            floor_from=get_serviced_floor(floor=request_data.from_floor, lift=lift_to_assign),
-            floor_to=get_serviced_floor(floor=request_data.to_floor, lift=lift_to_assign),
-        )
-        lift_request.save()
+        if request_data.from_floor != request_data.to_floor:
+            lift_request = LiftRequest(
+                lift=lift_to_assign,
+                floor_from=get_serviced_floor(floor=request_data.from_floor, lift=lift_to_assign),
+                floor_to=get_serviced_floor(floor=request_data.to_floor, lift=lift_to_assign),
+            )
+            lift_request.save()
 
         return JsonResponse({"lift": lift_to_assign.id})
     return JsonResponse({"error": "Only POST requests are supported."}, status=405)
@@ -175,6 +181,9 @@ def get_lift_status(request: HttpRequest) -> HttpResponse:
                 floors_from = {lift_request.floor_from.floor.floor_level for lift_request in lift_requests}
                 floors_to = {lift_request.floor_to.floor.floor_level for lift_request in lift_requests}
                 floors = floors_from.union(floors_to)
+                if lift.current_floor.floor_level in floors:
+                    # Remove the current floor
+                    floors.remove(lift.current_floor.floor_level)
 
                 if lift.current_floor is not None:
                     lift_status["lifts"][lift.id] = {

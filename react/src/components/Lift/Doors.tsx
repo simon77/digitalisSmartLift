@@ -30,22 +30,12 @@ const Door = styled.div`
 `;
 
 export const Doors = (props: LiftProps) => {
-    const openClass = props.doors ? 'open' : 'closed';
-
-    if (props.doors === 'open') {
-        return (
-            <>
-                <Door className={`left ${openClass}`}/>
-                <LiftButton lift={props.liftId.id} floor={props.liftId.floor} clickHandler={props.clickHandler}/>
-                <Door className={`right ${openClass}`}/>
-            </>
-        );
-    }
-
     return (
-            <>
-                <Door className={`left ${openClass}`}/>
-                <Door className={`right ${openClass}`}/>
-            </>
-        );
+        <>
+            <Door className={`left ${props.doorsOpen ? 'open' : 'closed'}`}/>
+            {props.doorsOpen && <LiftButton lift={props.liftId.id} floor={props.liftId.floor} clickHandler={props.clickHandler}/>}
+            <Door className={`right ${props.doorsOpen ? 'open' : 'closed'}`}/>
+        </>
+    );
+
 };

@@ -34,3 +34,5 @@ erDiagram
     }
 
 ```
+
+python manage.py runserver

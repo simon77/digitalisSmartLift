@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {Wrapper} from "../utils";
 import {PanelButtons} from "./PanelButtons";
 import axios from "axios";
+import {BuildingContext} from "../Building";
 
 export interface IControlPanelProps {
     floor: number
@@ -40,37 +41,39 @@ interface ILiftRequestData {
 
 
 export default function ControlPanel(props: IControlPanelProps) {
+    // @ts-ignore
+    const {liftMovement, setLiftMovement} = React.useContext(BuildingContext);
 
     const [liftToUse, setLiftToUse] = useState(0);
-    const [liftDirection, setLiftDirection] = useState<TLiftDirection>();
+    const [arrowDirection, setArrowDirection] = useState<TLiftDirection>();
     const sendLiftRequest = async (floor: number, floorIndex: number) => {
         try {
             const liftRequestPost: ILiftRequestData = {"from_floor": floor, "to_floor": floorIndex}
-            const response = await axios.post('http://localhost:8080/api/lift/request', liftRequestPost);
+            const response = await axios.post('http://127.0.0.1:8000/api/lift/request', liftRequestPost);
             console.log(response)
             console.log(props.leftLifts)
             console.log(props.leftLifts.includes(response.data["lift"]))
             if (props.leftLifts.includes(response.data["lift"])) {
                 // @ts-ignore
-                setLiftDirection('left')
+                setArrowDirection('left')
             } else {
                 // @ts-ignore
-                setLiftDirection('right')
+                setArrowDirection('right')
             }
             setLiftToUse(response.data["lift"])
+            setLiftMovement((prevState: boolean) => !prevState)
 
         } catch (error) {
             console.error('Error requesting lift:', error);
         }
     };
     useEffect(() => {
-
-    }, [liftToUse, liftDirection]);
+    }, [liftToUse]);
 
     return (
         <PanelContainer>
             <Wrapper>
-                <ControlPanelDisplay liftToUse={liftToUse} direction={liftDirection}></ControlPanelDisplay>
+                <ControlPanelDisplay liftToUse={liftToUse} direction={arrowDirection}></ControlPanelDisplay>
                 <PanelButtons
                     current_floor={props.floor}
                     floorCount={props.floorCount}

@@ -63,9 +63,7 @@ export const PanelButtons = ({
                 );
             });
         }, [
-            // clickedFloors,
             floorCount,
-            // clickHandler
         ]
     );
 

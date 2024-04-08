@@ -15,9 +15,9 @@ export type LiftProps = {
     currentFloor: number
     servicedFloors: number[]
     requestedFloors: number[]
-    doors: 'open' | 'closed'
+    doorsOpen: boolean
     direction?: 'up' | 'down'
-    clickHandler: (lift: number, floor: number) => Promise<void>;
+    clickHandler: (lift: number, floor: number) => void;
 };
 
 export interface ILiftMoveData {
@@ -42,20 +42,8 @@ export const Lift = (props: LiftProps) => {
         <ElevatorWrapper id={"floor" + props.liftId.floor + "lift" + props.liftId.id}>
             <Wrapper>
                 <Label id={props.liftId.id}></Label>
-                <Screen
-                    currentFloor={props.currentFloor}
-                    requestedFloors={props.requestedFloors}
-                    servicedFloors={props.servicedFloors}
-                    doors={props.doors}
-                    direction={props.direction}
-                ></Screen>
-                <Doors liftId={props.liftId}
-                       currentFloor={props.currentFloor}
-                       requestedFloors={props.requestedFloors}
-                       servicedFloors={props.servicedFloors}
-                       doors={props.doors}
-                       direction={props.direction}
-                       clickHandler={props.clickHandler}></Doors>
+                <Screen {...props} />
+                <Doors {...props} />
             </Wrapper>
         </ElevatorWrapper>
     );
